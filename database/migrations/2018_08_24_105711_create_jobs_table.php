@@ -14,16 +14,6 @@ class CreateJobsTable extends Migration
     public function up()
     {
         Schema::create('jobs', function (Blueprint $table) {
-            /*
-                id
-                Start Date and Time
-                Time in Queue
-                Status (Completed, processing, queued)
-                Time to Finish
-                *Total Time
-                Stock / Tag #
-                type_id
-            */
             $table->increments('id');
 
             $table->integer("status_id");
@@ -35,8 +25,11 @@ class CreateJobsTable extends Migration
 
             $table->string("stock_tag_number");
 
+            // $table->timestampsTz();
+            $table->timestampTz("created_at_timezone")->useCurrent();
 
-            $table->timestamps();
+
+            $table->timestampsTz();
         });
     }
 

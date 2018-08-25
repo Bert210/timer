@@ -38,3 +38,4 @@ Route::get('/history', function () {
 
 Route::get("/jobs", "JobController@index");
 Route::post("/jobs", "JobController@store");
+Route::post("/jobs/{job}/startJob", "JobController@startJob");

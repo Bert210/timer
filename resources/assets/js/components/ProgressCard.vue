@@ -15,10 +15,10 @@
         </div>
 
         <div class="col-6 text-right">
-            <div class="btn btn-dark" @click="startJob">Start Job</div>
+            <div class="btn btn-dark" @click="">Complete Job</div>
         </div>
         
-        <p slot="footer">Create at {{ this.data.created_at }}</p>
+        <p slot="footer">Started by {{this.data.employee_id}}</p>
     </Card>
 
 </template>
@@ -29,6 +29,7 @@
     import TimeFormatter from "./TimeFormatter.vue";
 
     export default {
+        name: "ProgressCard",
         components: { Card, TimeFormatter},
         props: [ "data" ],
         mounted() {
@@ -37,24 +38,14 @@
 
         data: function() {
             return {
-                startTime: +new Date(this.data.created_at_timezone),
-                time: Date.now() - +new Date(this.data.created_at_timezone),
+                startTime: +new Date(this.data.queue),
+                time: Date.now() - new Date(this.data.queue),
             }
         },
 
         methods: {
             timeDiff: function(){
                 this.time = Date.now() - this.startTime;
-                this.setHeaderBackground();
-            },
-            startJob: function(){
-                axios.post(`/jobs/${this.data.id}/startJob`)
-                .then(function (res){
-                    console.dirxml(res.data);
-                })
-                .catch(function (err){
-
-                });
             },
             setHeaderBackground: function(){
                 if(this.time >= 15 * 60 * 1000){
@@ -67,9 +58,6 @@
         },
 
         computed: {
-            // time: function(){
-            //     return Date.now()- new Date(this.data.created_at_timezone);
-            // }
         }
     }
 </script>

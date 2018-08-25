@@ -17,7 +17,11 @@ window.Vue = require('vue');
 
 // Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('queuecard', require('./components/QueueCard.vue'));
+Vue.component('progresscard', require('./components/ProgressCard.vue'));
+Vue.component('completedcard', require('./components/CompletedCard.vue'));
 Vue.component('newjobmodal', require('./components/NewJobModal.vue'));
+Vue.component('TimeFormatter', require('./components/TimeFormatter.vue'));
+
 
 
 const app = new Vue({

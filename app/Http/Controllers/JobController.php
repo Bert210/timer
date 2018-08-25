@@ -111,4 +111,12 @@ class JobController extends Controller
     {
         //
     }
+
+    public function startJob(Job $job) {
+        // dd($job);
+        $job->queue = \Carbon\Carbon::now();
+        $job->status_id = 2;
+        $job->save();
+
+    }
 }
