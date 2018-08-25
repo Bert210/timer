@@ -39,3 +39,8 @@ Route::get('/history', function () {
 Route::get("/jobs", "JobController@index");
 Route::post("/jobs", "JobController@store");
 Route::post("/jobs/{job}/startJob", "JobController@startJob");
+Route::post("/jobs/{job}/completedJob", "JobController@completeJob");
+Route::get("/jobs/queued", "JobController@queued");
+Route::get("/jobs/inProgress", "JobController@inProgress");
+Route::get("/jobs/completed", "JobController@completed");
+

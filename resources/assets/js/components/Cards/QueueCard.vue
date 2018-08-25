@@ -26,11 +26,11 @@
 
 <script>
     import Card from "./Card.vue";
-    import TimeFormatter from "./TimeFormatter.vue";
+    import TimeFormatter from "../Util/Formatters/TimeFormatter.vue";
 
     export default {
         components: { Card, TimeFormatter},
-        props: [ "data" ],
+        props: [ "data", "updateList" ],
         mounted() {
             setInterval(this.timeDiff, 250);
         },
@@ -48,9 +48,14 @@
                 this.setHeaderBackground();
             },
             startJob: function(){
-                axios.post(`/jobs/${this.data.id}/startJob`)
+                let vm = this;
+
+                axios.post(`/jobs/${this.data.id}/startJob`, {
+                    timeStarted: Date.now(),
+                })
                 .then(function (res){
-                    console.dirxml(res.data);
+                    // console.dirxml(res.data);
+                    vm.updateList();
                 })
                 .catch(function (err){
 

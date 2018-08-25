@@ -16,11 +16,13 @@ window.Vue = require('vue');
  */
 
 // Vue.component('example-component', require('./components/ExampleComponent.vue'));
-Vue.component('queuecard', require('./components/QueueCard.vue'));
-Vue.component('progresscard', require('./components/ProgressCard.vue'));
-Vue.component('completedcard', require('./components/CompletedCard.vue'));
-Vue.component('newjobmodal', require('./components/NewJobModal.vue'));
-Vue.component('TimeFormatter', require('./components/TimeFormatter.vue'));
+Vue.component('queuecard', require('./components/Cards/QueueCard.vue'));
+// Vue.component('progresscard', require('./components/Cards/ProgressCard.vue'));
+Vue.component('completedcard', require('./components/Cards/CompletedCard.vue'));
+Vue.component('queuecardwrapper', require('./components/CardWrapper/QueueCardWrapper.vue'));
+Vue.component('procressingcardwrapper', require('./components/CardWrapper/ProcessingCardWrapper.vue'));
+Vue.component('newjobmodal', require('./components/Modal/NewJobModal.vue'));
+Vue.component('TimeFormatter', require('./components/Util/Formatters/TimeFormatter.vue'));
 
 
 

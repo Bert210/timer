@@ -21,6 +21,17 @@ class JobController extends Controller
         dd($queued, $inProgress, $completed);
     }
 
+
+    public function queued() {
+        return Job::queued()->get();
+    }
+    public function inProgress() {
+        return json_encode(Job::inProgress()->get());
+    }
+    public function completed() {
+        return Job::completed()->get();
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -112,10 +123,27 @@ class JobController extends Controller
         //
     }
 
-    public function startJob(Job $job) {
-        // dd($job);
-        $job->queue = \Carbon\Carbon::now();
+    public function startJob(Job $job, Request $request) {
+
+        $validatedData = $request->validate([
+            'timeStarted' => 'required', 
+        ]); 
+
+        var_dump($validatedData['timeStarted']);
+        
+        $job->queue = (int)$validatedData['timeStarted'];
         $job->status_id = 2;
+        $job->save();
+    }
+
+    public function completeJob(Job $job, Request $request) {
+
+        $validatedData = $request->validate([
+            'timeCompleted' => 'required', 
+        ]); 
+
+        $job->processing = (int)$validatedData['timeCompleted'];
+        $job->status_id = 3;
         $job->save();
 
     }

@@ -20,8 +20,8 @@ class CreateJobsTable extends Migration
             $table->integer("type_id");
             $table->integer("employee_id");
 
-            $table->dateTime("queue")->nullable();
-            $table->dateTime("processing")->nullable();
+            $table->bigInteger("queue")->nullable();
+            $table->bigInteger("processing")->nullable();
 
             $table->string("stock_tag_number");
 

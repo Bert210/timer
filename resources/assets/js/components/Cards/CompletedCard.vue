@@ -53,26 +53,15 @@
 
 <script>
     import Card from "./Card.vue";
-    import TimeFormatter from "./TimeFormatter.vue";
+    import TimeFormatter from "../Util/Formatters/TimeFormatter.vue";
 
     export default {
-        components: { Card, TimeFormatter},
+        components: { Card, TimeFormatter },
         props: [ "data" ],
-        mounted() {
-            // console.log(this.data.created_at)
-            let start = new Date(this.data.created_at);
-            let end = new Date(this.data.queue);
-        },
-
-        // data: function() {
-        // },
-
-        methods: {
-        },
 
         computed: {
             queueTime: function(){
-                let start = new Date(this.data.created_at);
+                let start = new Date(this.data.created_at_timezone);
                 let end = new Date(this.data.queue);
 
                 return end - start;
@@ -85,7 +74,7 @@
 
             },
             totalTime: function(){
-                let start = new Date(this.data.created_at);
+                let start = new Date(this.data.created_at_timezone);
                 let end = new Date(this.data.processing);
                 
                 return end - start;

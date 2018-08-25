@@ -15,7 +15,7 @@
         </div>
 
         <div class="col-6 text-right">
-            <div class="btn btn-dark" @click="">Complete Job</div>
+            <div class="btn btn-dark" @click="completeJob">Complete Job</div>
         </div>
         
         <p slot="footer">Started by {{this.data.employee_id}}</p>
@@ -26,19 +26,19 @@
 
 <script>
     import Card from "./Card.vue";
-    import TimeFormatter from "./TimeFormatter.vue";
+    import TimeFormatter from "../Util/Formatters/TimeFormatter.vue";
 
     export default {
-        name: "ProgressCard",
+        name: "ProcessingCard",
         components: { Card, TimeFormatter},
-        props: [ "data" ],
+        props: [ "data", "updateList" ],
         mounted() {
             setInterval(this.timeDiff, 250);
         },
 
         data: function() {
             return {
-                startTime: +new Date(this.data.queue),
+                startTime: new Date(this.data.queue),
                 time: Date.now() - new Date(this.data.queue),
             }
         },
@@ -54,7 +54,23 @@
                     return "bg-warning";
                 }
                 return "bg-success";
-            }
+            },
+            completeJob: function(){
+                let vm = this;
+                axios.post(
+                    `/jobs/${this.data.id}/completedJob`,
+                    { timeCompleted: Date.now() }
+                ).then(function (res){
+                    console.dirxml(res.data);
+
+                    vm.updateList()
+
+                }).catch(function (err) {
+                    console.error(err);
+                })
+
+
+            },
         },
 
         computed: {
