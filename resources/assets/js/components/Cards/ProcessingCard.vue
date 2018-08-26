@@ -35,7 +35,7 @@
         components: { Card, TimeFormatter},
         props: [ "data", "updateList" ],
         mounted() {
-            setInterval(this.timeDiff, 250);
+            setInterval(this.timeDiff, 1000);
         },
 
         data: function() {

@@ -20,7 +20,7 @@ import QueueCard from "../Cards/QueueCard.vue";
 
 export default {
     components: { QueueCard },
-    props: ["updateQueue"],
+    props: ["updateQueue", "updateTimer"],
     mounted: function() {
         this.getQueueCards();
         this.updateQueue(this.getQueueCards);
@@ -37,6 +37,9 @@ export default {
             .then( function(res){
                 vm.queueCards = res.data;
             });
+
+            // this.updateTimer();
+
         }
     }
 }

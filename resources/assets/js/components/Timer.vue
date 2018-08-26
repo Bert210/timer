@@ -3,16 +3,19 @@
         <div class="col-sm-12 col-lg-4">
             <QueueCardWrapper
                 :updateQueue="updateQueue"
+                :updateTimer="updateAll"
             ></QueueCardWrapper>            
         </div>
         <div class="col-sm-12 col-lg-4">
             <ProcessingCardWrapper
-                :updateProcessing="updateProcessing"            
+                :updateProcessing="updateProcessing"
+                :updateTimer="updateAll"
             ></ProcessingCardWrapper>
         </div>
         <div class="col-sm-12 col-lg-4">
             <CompletedCardWrapper
                 :updateComplete="updateComplete"
+                :updateTimer="updateAll"
             ></CompletedCardWrapper>
         </div>
     </div>
@@ -28,8 +31,7 @@ import CompletedCardWrapper from './CardWrapper/CompletedCardWrapper.vue';
 export default {
     components: { QueueCardWrapper, ProcessingCardWrapper, CompletedCardWrapper},
     mounted: function() {
-        console.log("Mounted")
-        setInterval(this.updateAll, 1000);
+        setInterval(this.updateAll, 2000);
     },
 
     data: function() {
@@ -46,12 +48,11 @@ export default {
             this.updateProcessingCallback();
             this.updateCompleteCallback();
         },
-        updateQueue: function(updateCallback){ 
+        updateQueue: function(updateCallback){
             this.updateQueueCallback = updateCallback;
         },
         updateProcessing: function(updateCallback){ 
             this.updateProcessingCallback = updateCallback;
-
         },
         updateComplete: function(updateCallback){
             this.updateCompleteCallback = updateCallback;

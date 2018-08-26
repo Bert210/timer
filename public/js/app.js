@@ -30399,10 +30399,6 @@ window.Vue = __webpack_require__(163);
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-
-// Vue.component('queuecardwrapper', require('./components/CardWrapper/QueueCardWrapper.vue'));
-// Vue.component('procressingcardwrapper', require('./components/CardWrapper/ProcessingCardWrapper.vue'));
-// Vue.component('completedcardwrapper', require('./components/CardWrapper/CompletedCardWrapper.vue'));
 Vue.component('timer', __webpack_require__(219));
 Vue.component('newjobmodal', __webpack_require__(201));
 Vue.component('TimeFormatter', __webpack_require__(204));
@@ -65767,7 +65763,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     components: { Card: __WEBPACK_IMPORTED_MODULE_0__Card_vue___default.a, TimeFormatter: __WEBPACK_IMPORTED_MODULE_1__Util_Formatters_TimeFormatter_vue___default.a },
     props: ["data", "updateList"],
     mounted: function mounted() {
-        setInterval(this.timeDiff, 250);
+        setInterval(this.timeDiff, 1000);
     },
 
 
@@ -65789,7 +65785,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.post("/jobs/" + this.data.id + "/startJob", {
                 timeStarted: Date.now()
             }).then(function (res) {
-                // console.dirxml(res.data);
                 vm.updateList();
             }).catch(function (err) {});
         },
@@ -65801,12 +65796,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
             return "bg-success";
         }
-    },
-
-    computed: {
-        // time: function(){
-        //     return Date.now()- new Date(this.data.created_at_timezone);
-        // }
     }
 });
 
@@ -66231,18 +66220,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
     methods: {
+        reset: function reset() {
+            this.type = '';
+            this.stockTagNumber = '';
+            this.vin = '';
+        },
+
+
         createJob: function createJob() {
+            var vm = this;
             axios.post('/jobs', {
                 type: this.type,
                 stockTagNumber: this.stockTagNumber,
                 vin: this.vin
             }).then(function (response) {
-                console.dirxml(response.data);
+                // console.dirxml(response.data);
+                // vm.$emit('updateAll');
             }).catch(function (error) {
                 console.log(error);
             });
 
             $('#exampleModal').modal('hide');
+            this.reset();
         }
     }
 });
@@ -66617,7 +66616,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     components: { QueueCard: __WEBPACK_IMPORTED_MODULE_0__Cards_QueueCard_vue___default.a },
-    props: ["updateQueue"],
+    props: ["updateQueue", "updateTimer"],
     mounted: function mounted() {
         this.getQueueCards();
         this.updateQueue(this.getQueueCards);
@@ -66635,6 +66634,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.get('/jobs/queued').then(function (res) {
                 vm.queueCards = res.data;
             });
+
+            // this.updateTimer();
         }
     }
 });
@@ -66753,7 +66754,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: 'ProcessingCardWrapper',
-    props: ['updateProcessing'],
+    props: ['updateProcessing', 'updateAll'],
     components: { ProcessingCard: __WEBPACK_IMPORTED_MODULE_0__Cards_ProcessingCard_vue___default.a },
     mounted: function mounted() {
         this.getInProcessingCards();
@@ -66767,11 +66768,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         getInProcessingCards: function getInProcessingCards() {
-            console.log("getInProcessingCards");
             var vm = this;
 
             axios.get('/jobs/inProgress').then(function (res) {
                 vm.processingCards = res.data;
+                // vm.updateAll();
             });
         }
     }
@@ -66871,7 +66872,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     components: { Card: __WEBPACK_IMPORTED_MODULE_0__Card_vue___default.a, TimeFormatter: __WEBPACK_IMPORTED_MODULE_1__Util_Formatters_TimeFormatter_vue___default.a },
     props: ["data", "updateList"],
     mounted: function mounted() {
-        setInterval(this.timeDiff, 250);
+        setInterval(this.timeDiff, 1000);
     },
 
 
@@ -67067,10 +67068,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['updateComplete', 'updateAll'],
     components: { CompletedCard: __WEBPACK_IMPORTED_MODULE_0__Cards_CompletedCard_vue___default.a },
     mounted: function mounted() {
         this.getCompletedCards();
-        setInterval(this.getCompletedCards, 5000);
+        this.updateComplete(this.getCompletedCards);
     },
     data: function data() {
         return {
@@ -67080,7 +67082,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         getCompletedCards: function getCompletedCards() {
-            console.log("getCompletedCards");
             var vm = this;
 
             axios.get('/jobs/completed').then(function (res) {
@@ -67208,6 +67209,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 
@@ -67217,8 +67221,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     components: { QueueCardWrapper: __WEBPACK_IMPORTED_MODULE_0__CardWrapper_QueueCardWrapper_vue___default.a, ProcessingCardWrapper: __WEBPACK_IMPORTED_MODULE_1__CardWrapper_ProcessingCardWrapper_vue___default.a, CompletedCardWrapper: __WEBPACK_IMPORTED_MODULE_2__CardWrapper_CompletedCardWrapper_vue___default.a },
     mounted: function mounted() {
-        console.log("Mounted");
-        setInterval(this.updateAll, 1000);
+        setInterval(this.updateAll, 2000);
     },
 
     data: function data() {
@@ -67259,7 +67262,11 @@ var render = function() {
     _c(
       "div",
       { staticClass: "col-sm-12 col-lg-4" },
-      [_c("QueueCardWrapper", { attrs: { updateQueue: _vm.updateQueue } })],
+      [
+        _c("QueueCardWrapper", {
+          attrs: { updateQueue: _vm.updateQueue, updateTimer: _vm.updateAll }
+        })
+      ],
       1
     ),
     _vm._v(" "),
@@ -67268,7 +67275,10 @@ var render = function() {
       { staticClass: "col-sm-12 col-lg-4" },
       [
         _c("ProcessingCardWrapper", {
-          attrs: { updateProcessing: _vm.updateProcessing }
+          attrs: {
+            updateProcessing: _vm.updateProcessing,
+            updateTimer: _vm.updateAll
+          }
         })
       ],
       1
@@ -67279,7 +67289,10 @@ var render = function() {
       { staticClass: "col-sm-12 col-lg-4" },
       [
         _c("CompletedCardWrapper", {
-          attrs: { updateComplete: _vm.updateComplete }
+          attrs: {
+            updateComplete: _vm.updateComplete,
+            updateTimer: _vm.updateAll
+          }
         })
       ],
       1

@@ -19,7 +19,7 @@ import ProcessingCard from "../Cards/ProcessingCard.vue";
 
 export default {
     name: 'ProcessingCardWrapper',
-    props: ['updateProcessing'],
+    props: ['updateProcessing', 'updateAll'],
     components: { ProcessingCard },
     mounted: function() {
         this.getInProcessingCards();
@@ -31,13 +31,14 @@ export default {
 
     methods: {
         getInProcessingCards: function() {
-            console.log("getInProcessingCards");
             let vm = this;
 
             axios.get('/jobs/inProgress')
             .then( function(res){
                 vm.processingCards = res.data;
+                // vm.updateAll();
             });
+
         }
     }
 }

@@ -18,10 +18,11 @@
 import CompletedCard from "../Cards/CompletedCard.vue";
 
 export default {
+    props: ['updateComplete', 'updateAll'],
     components: { CompletedCard },
     mounted: function() {
         this.getCompletedCards();
-        setInterval(this.getCompletedCards, 5000);
+        this.updateComplete(this.getCompletedCards);
     },
     data: () => ({
         completedCards: [],
@@ -29,13 +30,13 @@ export default {
 
     methods: {
         getCompletedCards: function() {
-            console.log("getCompletedCards");
             let vm = this;
 
             axios.get('/jobs/completed')
             .then( function(res){
                 vm.completedCards = res.data;
             });
+
         }
     }
 }

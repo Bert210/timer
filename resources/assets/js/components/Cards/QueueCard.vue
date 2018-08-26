@@ -33,7 +33,7 @@
         components: { Card, TimeFormatter},
         props: [ "data", "updateList" ],
         mounted() {
-            setInterval(this.timeDiff, 250);
+            setInterval(this.timeDiff, 1000);
         },
 
         data: function() {
@@ -55,7 +55,6 @@
                     timeStarted: Date.now(),
                 })
                 .then(function (res){
-                    // console.dirxml(res.data);
                     vm.updateList();
                 })
                 .catch(function (err){
@@ -71,11 +70,5 @@
                 return "bg-success";
             }
         },
-
-        computed: {
-            // time: function(){
-            //     return Date.now()- new Date(this.data.created_at_timezone);
-            // }
-        }
     }
 </script>

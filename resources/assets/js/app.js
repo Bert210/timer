@@ -14,10 +14,6 @@ window.Vue = require('vue');
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-
-// Vue.component('queuecardwrapper', require('./components/CardWrapper/QueueCardWrapper.vue'));
-// Vue.component('procressingcardwrapper', require('./components/CardWrapper/ProcessingCardWrapper.vue'));
-// Vue.component('completedcardwrapper', require('./components/CardWrapper/CompletedCardWrapper.vue'));
 Vue.component('timer', require('./components/Timer.vue'));
 Vue.component('newjobmodal', require('./components/Modal/NewJobModal.vue'));
 Vue.component('TimeFormatter', require('./components/Util/Formatters/TimeFormatter.vue'));

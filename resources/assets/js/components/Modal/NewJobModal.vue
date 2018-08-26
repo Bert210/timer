@@ -47,7 +47,14 @@ export default {
         });
     },
     methods: {
+        reset(){
+            this.type = '';
+            this.stockTagNumber = '';
+            this.vin = '';
+        },
+
         createJob: function(){
+            let vm = this;
             axios.post('/jobs', 
             {
                 type: this.type,
@@ -55,13 +62,15 @@ export default {
                 vin: this.vin,
             })
             .then(function (response) {
-                console.dirxml(response.data);
+                // console.dirxml(response.data);
+                // vm.$emit('updateAll');
             })
             .catch(function (error) {
                 console.log(error);
             });
 
             $('#exampleModal').modal('hide');
+            this.reset();
         }
     }
 }
