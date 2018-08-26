@@ -14,22 +14,24 @@ class JobController extends Controller
      */
     public function index()
     {
-        $queued = Job::queued()->get();
-        $inProgress = Job::inProgress()->get();
-        $completed = Job::completed()->get();
+        $queued = Job::queued()->with(["status", "type"])->get()->toArray();
+        $inProgress = Job::inProgress()->with(["type"])->get()->toArray();
+        $completed = Job::completed()->with(["type"])->get()->toArray();
 
         dd($queued, $inProgress, $completed);
     }
 
 
     public function queued() {
-        return Job::queued()->get();
+        return Job::queued()->with(["status", "type"])->get();
     }
+
     public function inProgress() {
-        return json_encode(Job::inProgress()->get());
+        return Job::inProgress()->with(["status", "type"])->get();
     }
+    
     public function completed() {
-        return Job::completed()->get();
+        return Job::completed()->with(["status", "type"])->get();
     }
 
     /**

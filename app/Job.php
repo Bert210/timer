@@ -18,4 +18,12 @@ class Job extends Model
     public static function scopeCompleted ($query) {
         return $query->where('status_id', 3);
     }
+
+    public function status() {
+        return $this->belongsTo(Status::class);
+    }
+
+    public function type() {
+        return $this->belongsTo(Type::class, 'type_id', 'id');
+    }
 }

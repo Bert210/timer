@@ -65877,7 +65877,7 @@ var render = function() {
         _c("div", { staticClass: "col-6 text-right" }, [
           _c("h4", [
             _c("span", { staticClass: "badge badge-light" }, [
-              _vm._v(_vm._s(_vm.type))
+              _vm._v(_vm._s(_vm.type.name))
             ])
           ])
         ])
@@ -65921,7 +65921,7 @@ var render = function() {
     {
       attrs: {
         stockTagNumber: this.data.stock_tag_number,
-        type: this.data.type_id,
+        type: this.data.type,
         headerBackground: this.setHeaderBackground()
       }
     },
@@ -66110,7 +66110,7 @@ var render = function() {
     {
       attrs: {
         stockTagNumber: this.data.stock_tag_number,
-        type: this.data.type_id
+        type: this.data.type
       }
     },
     [
@@ -66947,7 +66947,7 @@ var render = function() {
     {
       attrs: {
         stockTagNumber: this.data.stock_tag_number,
-        type: this.data.type_id,
+        type: this.data.type,
         headerBackground: this.setHeaderBackground()
       }
     },

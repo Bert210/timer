@@ -6,7 +6,7 @@
                     <h4 class="font-weight-bold">{{ stockTagNumber }}</h4>
                 </div>
                 <div class="col-6 text-right">
-                    <h4><span class="badge badge-light">{{ type }}</span></h4>
+                    <h4><span class="badge badge-light">{{ type.name }}</span></h4>
                 </div>
             </div>
         </div>

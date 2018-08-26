@@ -18,6 +18,7 @@ class CreateJobsTable extends Migration
 
             $table->integer("status_id");
             $table->integer("type_id");
+            // $table->foreign("type_id")->references('id')->on('types');
             $table->integer("employee_id");
 
             $table->bigInteger("queue")->nullable();

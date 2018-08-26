@@ -2,7 +2,7 @@
 
     <Card
         :stockTagNumber="this.data.stock_tag_number"
-        :type="this.data.type_id"
+        :type="this.data.type"
         :headerBackground="this.setHeaderBackground()"
     >
 
