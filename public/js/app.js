@@ -30401,7 +30401,9 @@ window.Vue = __webpack_require__(163);
  */
 Vue.component('timer', __webpack_require__(219));
 Vue.component('newjobmodal', __webpack_require__(201));
-Vue.component('TimeFormatter', __webpack_require__(204));
+// Vue.component('timeformatter', require('./components/Util/Formatters/TimeFormatter.vue'));
+// Vue.component('timeformatter', require('./components/Util/Formatters/TimeFormatter.vue'));
+Vue.component('startendtimeformatter', __webpack_require__(222));
 
 var app = new Vue({
   el: '#app'
@@ -66508,7 +66510,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 var momentDurationFormatSetup = __webpack_require__(172);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ["time"],
+    props: ["time", "startTime", "endTime"],
     computed: {
         formatTime: function formatTime() {
             var duration = __WEBPACK_IMPORTED_MODULE_0_moment___default.a.duration(this.time).format("hh:mm:ss", { trim: false });
@@ -67306,6 +67308,114 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-4a91651e", module.exports)
+  }
+}
+
+/***/ }),
+/* 222 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(223)
+/* template */
+var __vue_template__ = __webpack_require__(224)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Util/Formatters/StartEndTimeFormatter.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-1fd68a84", Component.options)
+  } else {
+    hotAPI.reload("data-v-1fd68a84", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 223 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__TimeFormatter_vue__ = __webpack_require__(204);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__TimeFormatter_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__TimeFormatter_vue__);
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['startTime', 'endTime'],
+    components: { TimeFormatter: __WEBPACK_IMPORTED_MODULE_0__TimeFormatter_vue___default.a },
+    mounted: function mounted() {
+        // console.log(this.startTime, this.endTime);
+    },
+    computed: {
+        timeDiff: function timeDiff() {
+            var sTime = Date.parse(this.startTime);
+            var eTime = Date.parse(this.endTime);
+
+            if (isNaN(sTime)) {
+                sTime = parseInt(this.startTime);
+            }
+
+            if (isNaN(eTime)) {
+                eTime = parseInt(this.endTime);
+            }
+
+            return eTime - sTime;
+        }
+    }
+});
+
+/***/ }),
+/* 224 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("TimeFormatter", { attrs: { time: _vm.timeDiff } })
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-1fd68a84", module.exports)
   }
 }
 

@@ -28,7 +28,8 @@ Route::get('/', function () {
 });
 
 Route::get('/history', function () {
-    $jobs = App\Job::all();
+    $jobs = App\Job::with(['status', 'type', 'employee'])->get();
+
 
     $types = App\Type::all();
     // dd(request()->query());

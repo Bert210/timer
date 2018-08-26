@@ -25,14 +25,35 @@
                 <tbody>
                     @foreach($jobs as $job)
                     <tr>
-                        <td>{{ $job->created_at }}</td>
+                        <td>{{ $job->created_at_timezone }}</td>
                         <td>{{ $job->stock_tag_number }}</td>
-                        <td>{{ $job->type_id }}</td>
-                        <td>{{ $job->status_id }}</td>
-                        <td>{{ $job->employee_id }}</td>
-                        <td>{{ $job->queue }}</td>
-                        <td>{{ $job->processing }}</td>
-                        <td>{{ $job->total_time }}</td>
+                        <td>{{ $job->type->name }}</td>
+                        <td>{{ $job->status->name }}</td>
+                        <td>{{ $job->employee->name }}</td>
+                        <td>
+                            @if($job->status_id > 1)
+                            <startendtimeformatter
+                                start-time="{{ $job->created_at_timezone }}"
+                                end-time="{{ $job->queue }}"
+                            ></startendtimeformatter>
+                            @endif
+                        </td>
+                        <td>
+                            @if($job->status_id > 2)
+                            <startendtimeformatter
+                                start-time="{{ $job->queue }}"
+                                end-time="{{ $job->processing }}"
+                            ></startendtimeformatter>
+                            @endif
+                        </td>
+                        <td>
+                            @if($job->status_id > 2)
+                                <startendtimeformatter
+                                    start-time="{{ $job->created_at_timezone }}"
+                                    end-time="{{ $job->processing }}"
+                                ></startendtimeformatter>
+                            @endif
+                        </td>
                     </tr>
                     @endforeach
                 </tbody>
