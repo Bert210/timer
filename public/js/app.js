@@ -30400,12 +30400,10 @@ window.Vue = __webpack_require__(163);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-// Vue.component('example-component', require('./components/ExampleComponent.vue'));
-Vue.component('queuecard', __webpack_require__(190));
-// Vue.component('progresscard', require('./components/Cards/ProgressCard.vue'));
-Vue.component('completedcard', __webpack_require__(198));
-Vue.component('queuecardwrapper', __webpack_require__(207));
-Vue.component('procressingcardwrapper', __webpack_require__(210));
+// Vue.component('queuecardwrapper', require('./components/CardWrapper/QueueCardWrapper.vue'));
+// Vue.component('procressingcardwrapper', require('./components/CardWrapper/ProcessingCardWrapper.vue'));
+// Vue.component('completedcardwrapper', require('./components/CardWrapper/CompletedCardWrapper.vue'));
+Vue.component('timer', __webpack_require__(219));
 Vue.component('newjobmodal', __webpack_require__(201));
 Vue.component('TimeFormatter', __webpack_require__(204));
 
@@ -65760,6 +65758,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -65842,19 +65841,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ["stockTagNumber", "type", "headerBackground"],
+    props: ["stockTagNumber", "type", "headerBackground", "badgeBackground"],
     mounted: function mounted() {
         // setInterval(this.updateTimer, 1000);
-    },
-
-
-    data: function data() {
-        return {};
-    },
-
-    methods: {},
-
-    computed: {}
+    }
 });
 
 /***/ }),
@@ -65876,7 +65866,7 @@ var render = function() {
         _vm._v(" "),
         _c("div", { staticClass: "col-6 text-right" }, [
           _c("h4", [
-            _c("span", { staticClass: "badge badge-light" }, [
+            _c("span", { class: ["badge", _vm.badgeBackground] }, [
               _vm._v(_vm._s(_vm.type.name))
             ])
           ])
@@ -65922,7 +65912,8 @@ var render = function() {
       attrs: {
         stockTagNumber: this.data.stock_tag_number,
         type: this.data.type,
-        headerBackground: this.setHeaderBackground()
+        headerBackground: this.setHeaderBackground(),
+        badgeBackground: "badge-light"
       }
     },
     [
@@ -65939,7 +65930,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("p", { attrs: { slot: "footer" }, slot: "footer" }, [
-        _vm._v("Create at " + _vm._s(this.data.created_at))
+        _vm._v("Queue Time: " + _vm._s(this.data.created_at))
       ])
     ]
   )
@@ -66052,21 +66043,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -66110,7 +66086,8 @@ var render = function() {
     {
       attrs: {
         stockTagNumber: this.data.stock_tag_number,
-        type: this.data.type
+        type: this.data.type,
+        badgeBackground: "badge-dark"
       }
     },
     [
@@ -66137,7 +66114,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("p", { attrs: { slot: "footer" }, slot: "footer" }, [
-        _vm._v("Completed by " + _vm._s(this.data.created_at))
+        _vm._v("Completed by " + _vm._s(this.data.employee.name))
       ])
     ]
   )
@@ -66243,12 +66220,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['types'],
     data: function data() {
         return {
             type: '',
@@ -66333,17 +66307,13 @@ var render = function() {
                     }
                   }
                 },
-                [
-                  _c("option", [_vm._v("1")]),
-                  _vm._v(" "),
-                  _c("option", [_vm._v("2")]),
-                  _vm._v(" "),
-                  _c("option", [_vm._v("3")]),
-                  _vm._v(" "),
-                  _c("option", [_vm._v("4")]),
-                  _vm._v(" "),
-                  _c("option", [_vm._v("5")])
-                ]
+                _vm._l(_vm.types, function(type) {
+                  return _c(
+                    "option",
+                    { key: type.id, domProps: { value: type.id } },
+                    [_vm._v(_vm._s(type.name))]
+                  )
+                })
               )
             ]),
             _vm._v(" "),
@@ -66647,9 +66617,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     components: { QueueCard: __WEBPACK_IMPORTED_MODULE_0__Cards_QueueCard_vue___default.a },
+    props: ["updateQueue"],
     mounted: function mounted() {
         this.getQueueCards();
-        setInterval(this.getQueueCards, 5000);
+        this.updateQueue(this.getQueueCards);
     },
     data: function data() {
         return {
@@ -66781,10 +66752,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    name: 'ProcessingCardWrapper',
+    props: ['updateProcessing'],
     components: { ProcessingCard: __WEBPACK_IMPORTED_MODULE_0__Cards_ProcessingCard_vue___default.a },
     mounted: function mounted() {
         this.getInProcessingCards();
-        setInterval(this.getInProcessingCards, 5000);
+        this.updateProcessing(this.getInProcessingCards);
     },
     data: function data() {
         return {
@@ -66887,6 +66860,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -66922,8 +66897,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         completeJob: function completeJob() {
             var vm = this;
             axios.post("/jobs/" + this.data.id + "/completedJob", { timeCompleted: Date.now() }).then(function (res) {
-                console.dirxml(res.data);
-
                 vm.updateList();
             }).catch(function (err) {
                 console.error(err);
@@ -66948,7 +66921,8 @@ var render = function() {
       attrs: {
         stockTagNumber: this.data.stock_tag_number,
         type: this.data.type,
-        headerBackground: this.setHeaderBackground()
+        headerBackground: this.setHeaderBackground(),
+        badgeBackground: "badge-light"
       }
     },
     [
@@ -66965,7 +66939,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("p", { attrs: { slot: "footer" }, slot: "footer" }, [
-        _vm._v("Started by " + _vm._s(this.data.employee_id))
+        _vm._v("Started by " + _vm._s(this.data.employee.name))
       ])
     ]
   )
@@ -67015,6 +66989,310 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-13af7f5d", module.exports)
+  }
+}
+
+/***/ }),
+/* 216 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(217)
+/* template */
+var __vue_template__ = __webpack_require__(218)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/CardWrapper/CompletedCardWrapper.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-6d87319b", Component.options)
+  } else {
+    hotAPI.reload("data-v-6d87319b", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 217 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Cards_CompletedCard_vue__ = __webpack_require__(198);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__Cards_CompletedCard_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__Cards_CompletedCard_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    components: { CompletedCard: __WEBPACK_IMPORTED_MODULE_0__Cards_CompletedCard_vue___default.a },
+    mounted: function mounted() {
+        this.getCompletedCards();
+        setInterval(this.getCompletedCards, 5000);
+    },
+    data: function data() {
+        return {
+            completedCards: []
+        };
+    },
+
+    methods: {
+        getCompletedCards: function getCompletedCards() {
+            console.log("getCompletedCards");
+            var vm = this;
+
+            axios.get('/jobs/completed').then(function (res) {
+                vm.completedCards = res.data;
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 218 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "card" }, [
+    _c("div", { staticClass: "card-header justify-content-space-around" }, [
+      _vm._v("\n        Processing - "),
+      _c("span", { staticClass: "badge badge-primary" }, [
+        _vm._v(_vm._s(_vm.completedCards.length))
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "card-body" },
+      _vm._l(_vm.completedCards, function(completedCard, index) {
+        return _c("CompletedCard", {
+          key: index,
+          attrs: { data: completedCard, updateList: _vm.getCompletedCards }
+        })
+      })
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-6d87319b", module.exports)
+  }
+}
+
+/***/ }),
+/* 219 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(2)
+/* script */
+var __vue_script__ = __webpack_require__(220)
+/* template */
+var __vue_template__ = __webpack_require__(221)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/Timer.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-4a91651e", Component.options)
+  } else {
+    hotAPI.reload("data-v-4a91651e", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 220 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__CardWrapper_QueueCardWrapper_vue__ = __webpack_require__(207);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__CardWrapper_QueueCardWrapper_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__CardWrapper_QueueCardWrapper_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__CardWrapper_ProcessingCardWrapper_vue__ = __webpack_require__(210);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__CardWrapper_ProcessingCardWrapper_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__CardWrapper_ProcessingCardWrapper_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__CardWrapper_CompletedCardWrapper_vue__ = __webpack_require__(216);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__CardWrapper_CompletedCardWrapper_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__CardWrapper_CompletedCardWrapper_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    components: { QueueCardWrapper: __WEBPACK_IMPORTED_MODULE_0__CardWrapper_QueueCardWrapper_vue___default.a, ProcessingCardWrapper: __WEBPACK_IMPORTED_MODULE_1__CardWrapper_ProcessingCardWrapper_vue___default.a, CompletedCardWrapper: __WEBPACK_IMPORTED_MODULE_2__CardWrapper_CompletedCardWrapper_vue___default.a },
+    mounted: function mounted() {
+        console.log("Mounted");
+        setInterval(this.updateAll, 1000);
+    },
+
+    data: function data() {
+        return {
+            updateQueueCallback: null,
+            updateProcessingCallback: null,
+            updateCompleteCallback: null
+        };
+    },
+    methods: {
+        updateAll: function updateAll() {
+            console.log("Updating all!");
+            this.updateQueueCallback();
+            this.updateProcessingCallback();
+            this.updateCompleteCallback();
+        },
+        updateQueue: function updateQueue(updateCallback) {
+            this.updateQueueCallback = updateCallback;
+        },
+        updateProcessing: function updateProcessing(updateCallback) {
+            this.updateProcessingCallback = updateCallback;
+        },
+        updateComplete: function updateComplete(updateCallback) {
+            this.updateCompleteCallback = updateCallback;
+        }
+    }
+});
+
+/***/ }),
+/* 221 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "row" }, [
+    _c(
+      "div",
+      { staticClass: "col-sm-12 col-lg-4" },
+      [_c("QueueCardWrapper", { attrs: { updateQueue: _vm.updateQueue } })],
+      1
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "col-sm-12 col-lg-4" },
+      [
+        _c("ProcessingCardWrapper", {
+          attrs: { updateProcessing: _vm.updateProcessing }
+        })
+      ],
+      1
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "col-sm-12 col-lg-4" },
+      [
+        _c("CompletedCardWrapper", {
+          attrs: { updateComplete: _vm.updateComplete }
+        })
+      ],
+      1
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-4a91651e", module.exports)
   }
 }
 

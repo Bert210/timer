@@ -18,22 +18,27 @@ Route::get('/', function () {
     $queued = App\Job::queued()->get();
     $inProgress = App\Job::inProgress()->get();
     $completed = App\Job::completed()->get();
+    $types = App\Type::all();
 
     return view('index')
         ->with("queued", $queued)
         ->with("inProgress", $inProgress)
-        ->with("completed", $completed);
+        ->with("completed", $completed)
+        ->with("types", $types);
 });
 
 Route::get('/history', function () {
     $jobs = App\Job::all();
 
+    $types = App\Type::all();
     // dd(request()->query());
     if(request()->query("dd")){
         dd($jobs);
     }
 
-    return view('history')->with("jobs", $jobs);
+    return view('history')
+        ->with("jobs", $jobs)
+        ->with("types", $types);
 });
 
 Route::get("/jobs", "JobController@index");

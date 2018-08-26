@@ -18,10 +18,12 @@
 import ProcessingCard from "../Cards/ProcessingCard.vue";
 
 export default {
+    name: 'ProcessingCardWrapper',
+    props: ['updateProcessing'],
     components: { ProcessingCard },
     mounted: function() {
         this.getInProcessingCards();
-        setInterval(this.getInProcessingCards, 5000);
+        this.updateProcessing(this.getInProcessingCards);
     },
     data: () => ({
         processingCards: [],

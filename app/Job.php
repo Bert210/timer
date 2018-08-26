@@ -26,4 +26,8 @@ class Job extends Model
     public function type() {
         return $this->belongsTo(Type::class, 'type_id', 'id');
     }
+
+    public function employee() {
+        return $this->belongsTo(Employee::class, 'employee_id', 'id');
+    }
 }

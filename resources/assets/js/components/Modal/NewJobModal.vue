@@ -13,11 +13,7 @@
                 <div class="form-group">
                     <label for="exampleFormControlSelect1">Example select</label>
                     <select class="form-control" v-model="type" id="exampleFormControlSelect1">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
+                        <option v-for="type in types" v-bind:key="type.id" :value="type.id">{{ type.name }}</option>
                     </select>
                 </div>
 
@@ -42,6 +38,7 @@
 
 <script>
 export default {
+    props: ['types'],
     data: function() {
         return ({
             type: '',

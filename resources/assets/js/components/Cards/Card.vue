@@ -6,7 +6,7 @@
                     <h4 class="font-weight-bold">{{ stockTagNumber }}</h4>
                 </div>
                 <div class="col-6 text-right">
-                    <h4><span class="badge badge-light">{{ type.name }}</span></h4>
+                    <h4><span :class="['badge', badgeBackground]">{{ type.name }}</span></h4>
                 </div>
             </div>
         </div>
@@ -23,21 +23,9 @@
 
 <script>
     export default {
-        props: ["stockTagNumber", "type", "headerBackground"],
+        props: ["stockTagNumber", "type", "headerBackground", "badgeBackground"],
         mounted() {
             // setInterval(this.updateTimer, 1000);
         },
-
-        data: function() {
-            return ({
-            });
-        },
-
-        methods: {
-        },
-
-        computed: {
-
-        }
     }
 </script>

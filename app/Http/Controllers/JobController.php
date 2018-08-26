@@ -15,8 +15,8 @@ class JobController extends Controller
     public function index()
     {
         $queued = Job::queued()->with(["status", "type"])->get()->toArray();
-        $inProgress = Job::inProgress()->with(["type"])->get()->toArray();
-        $completed = Job::completed()->with(["type"])->get()->toArray();
+        $inProgress = Job::inProgress()->with(["type", "employee"])->get()->toArray();
+        $completed = Job::completed()->with(["type","employee"])->get()->toArray();
 
         dd($queued, $inProgress, $completed);
     }
@@ -27,11 +27,11 @@ class JobController extends Controller
     }
 
     public function inProgress() {
-        return Job::inProgress()->with(["status", "type"])->get();
+        return Job::inProgress()->with(["status", "type", "employee"])->get();
     }
-    
+
     public function completed() {
-        return Job::completed()->with(["status", "type"])->get();
+        return Job::completed()->with(["status", "type", "employee"])->get();
     }
 
     /**

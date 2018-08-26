@@ -9,4 +9,8 @@ class Employee extends Model
     protected $fillable = ['id', 'name', 'number'];
 
     public $timestamps = false;
+
+    public function jobs() {
+        return $this->hasMany(Job::class);
+    }
 }

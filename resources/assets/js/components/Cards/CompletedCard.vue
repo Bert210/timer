@@ -3,13 +3,11 @@
     <Card
         :stockTagNumber="this.data.stock_tag_number"
         :type="this.data.type"
+        badgeBackground="badge-dark"
     >
         <div class="col-4">
             <div>In Queue:</div>
             <div>
-                <!-- <TimeFormatter
-                    :time="queueTime"
-                ></TimeFormatter> -->
                 <TimeFormatter
                     :time="queueTime"
                 ></TimeFormatter>
@@ -31,21 +29,8 @@
                 ></TimeFormatter>
             </div>
         </div>
-
-
-        <!-- <div class="col-6">
-            <h2>
-                <TimeFormatter
-                    :time="Date.now()"
-                ></TimeFormatter>
-            </h2>
-        </div>
-
-        <div class="col-6 text-right">
-            <div class="btn btn-dark" @click="">Start Job</div>
-        </div> -->
         
-        <p slot="footer">Completed by {{ this.data.created_at }}</p>
+        <p slot="footer">Completed by {{ this.data.employee.name }}</p>
     </Card>
 
 </template>

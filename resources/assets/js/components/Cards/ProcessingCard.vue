@@ -4,6 +4,8 @@
         :stockTagNumber="this.data.stock_tag_number"
         :type="this.data.type"
         :headerBackground="this.setHeaderBackground()"
+        badgeBackground="badge-light"
+
     >
 
         <div class="col-6">
@@ -18,7 +20,7 @@
             <div class="btn btn-dark" @click="completeJob">Complete Job</div>
         </div>
         
-        <p slot="footer">Started by {{this.data.employee_id}}</p>
+        <p slot="footer">Started by {{ this.data.employee.name }}</p>
     </Card>
 
 </template>
@@ -61,10 +63,7 @@
                     `/jobs/${this.data.id}/completedJob`,
                     { timeCompleted: Date.now() }
                 ).then(function (res){
-                    console.dirxml(res.data);
-
                     vm.updateList()
-
                 }).catch(function (err) {
                     console.error(err);
                 })

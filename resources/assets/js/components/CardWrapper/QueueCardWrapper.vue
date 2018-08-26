@@ -20,9 +20,10 @@ import QueueCard from "../Cards/QueueCard.vue";
 
 export default {
     components: { QueueCard },
+    props: ["updateQueue"],
     mounted: function() {
         this.getQueueCards();
-        setInterval(this.getQueueCards, 5000);
+        this.updateQueue(this.getQueueCards);
     },
     data: () => ({
         queueCards: [],

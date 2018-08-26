@@ -15,12 +15,10 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-// Vue.component('example-component', require('./components/ExampleComponent.vue'));
-Vue.component('queuecard', require('./components/Cards/QueueCard.vue'));
-// Vue.component('progresscard', require('./components/Cards/ProgressCard.vue'));
-Vue.component('completedcard', require('./components/Cards/CompletedCard.vue'));
-Vue.component('queuecardwrapper', require('./components/CardWrapper/QueueCardWrapper.vue'));
-Vue.component('procressingcardwrapper', require('./components/CardWrapper/ProcessingCardWrapper.vue'));
+// Vue.component('queuecardwrapper', require('./components/CardWrapper/QueueCardWrapper.vue'));
+// Vue.component('procressingcardwrapper', require('./components/CardWrapper/ProcessingCardWrapper.vue'));
+// Vue.component('completedcardwrapper', require('./components/CardWrapper/CompletedCardWrapper.vue'));
+Vue.component('timer', require('./components/Timer.vue'));
 Vue.component('newjobmodal', require('./components/Modal/NewJobModal.vue'));
 Vue.component('TimeFormatter', require('./components/Util/Formatters/TimeFormatter.vue'));
 

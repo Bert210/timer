@@ -4,6 +4,7 @@
         :stockTagNumber="this.data.stock_tag_number"
         :type="this.data.type"
         :headerBackground="this.setHeaderBackground()"
+        badgeBackground="badge-light"
     >
 
         <div class="col-6">
@@ -18,7 +19,7 @@
             <div class="btn btn-dark" @click="startJob">Start Job</div>
         </div>
         
-        <p slot="footer">Create at {{ this.data.created_at }}</p>
+        <p slot="footer">Queue Time: {{ this.data.created_at }}</p>
     </Card>
 
 </template>
