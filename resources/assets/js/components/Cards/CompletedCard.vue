@@ -10,7 +10,7 @@
             <div>In Queue:</div>
             <div>
                 <TimeFormatter
-                    :time="queueTime"
+                    :time="this.data.queue_time"
                 ></TimeFormatter>
             </div>
         </div>
@@ -18,7 +18,7 @@
             <div>Processing:</div>
             <div>
                 <TimeFormatter
-                    :time="processTime"
+                    :time="this.data.processing_time"
                 ></TimeFormatter>
             </div>
         </div>
@@ -26,7 +26,7 @@
             <div>Total Time:</div>
             <div>
                 <TimeFormatter
-                    :time="totalTime"
+                    :time="this.data.total_time"
                 ></TimeFormatter>
             </div>
         </div>
@@ -44,27 +44,5 @@
     export default {
         components: { Card, TimeFormatter },
         props: [ "data" ],
-
-        computed: {
-            queueTime: function(){
-                let start = new Date(this.data.created_at_timezone);
-                let end = new Date(this.data.queue);
-
-                return end - start;
-            },
-            processTime: function(){
-                let start = new Date(this.data.queue);
-                let end = new Date(this.data.processing);
-                
-                return end - start;
-
-            },
-            totalTime: function(){
-                let start = new Date(this.data.created_at_timezone);
-                let end = new Date(this.data.processing);
-                
-                return end - start;
-            }
-        }
     }
 </script>
