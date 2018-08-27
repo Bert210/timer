@@ -41,8 +41,8 @@
 
         data: function() {
             return {
-                startTime: this.data.created_at_ms,
-                time: Date.now() -  this.data.created_at_ms,
+                startTime: this.data.queue,
+                time: Date.now() -  this.data.queue,
             }
         },
 
