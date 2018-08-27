@@ -77,26 +77,23 @@
                         <td>{{ $job->employee->name }}</td>
                         <td>
                             @if($job->status_id > 1)
-                            <startendtimeformatter
-                                start-time="{{ $job->created_at_timezone }}"
-                                end-time="{{ $job->queue }}"
-                            ></startendtimeformatter>
+                                <timeformatter
+                                    :time="{{ $job->queue_time }}"
+                                ></timeformatter>
                             @endif
                         </td>
                         <td>
                             @if($job->status_id > 2)
-                            <startendtimeformatter
-                                start-time="{{ $job->queue }}"
-                                end-time="{{ $job->processing }}"
-                            ></startendtimeformatter>
+                                <timeformatter
+                                    :time="{{ $job->processing_time }}"
+                                ></timeformatter>
                             @endif
                         </td>
                         <td>
                             @if($job->status_id > 2)
-                                <startendtimeformatter
-                                    start-time="{{ $job->created_at_timezone }}"
-                                    end-time="{{ $job->processing }}"
-                                ></startendtimeformatter>
+                                <timeformatter
+                                    :time="{{ $job->total_time }}"
+                                ></timeformatter>
                             @endif
                         </td>
                     </tr>
