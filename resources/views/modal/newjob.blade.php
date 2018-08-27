@@ -1,2 +1,4 @@
 <!-- Modal -->
-<newjobmodal></newjobmodal>  
+<newjobmodal
+    :types="{{ $types }}"
+></newjobmodal>  

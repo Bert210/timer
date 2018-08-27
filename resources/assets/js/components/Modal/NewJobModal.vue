@@ -13,11 +13,7 @@
                 <div class="form-group">
                     <label for="exampleFormControlSelect1">Example select</label>
                     <select class="form-control" v-model="type" id="exampleFormControlSelect1">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
+                        <option v-for="type in types" v-bind:key="type.id" :value="type.id">{{ type.name }}</option>
                     </select>
                 </div>
 
@@ -30,10 +26,15 @@
                     <label for="exampleInputEmail1">VIN: (Optional)</label>
                     <input type="text" v-model="vin" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                 </div>
+
+                <div class="form-group">
+                    <label for="vipCheckbox">VIP</label>
+                    <input type="checkbox" v-model="vip" class="form-control" id="vipCheckbox" aria-describedby="emailHelp">
+                </div>
             </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" @click="createJob">Add Job</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" @click="createJob">Add Job</button>
                 </div>
             </div>
         </div>
@@ -42,27 +43,43 @@
 
 <script>
 export default {
+    props: ['types'],
     data: function() {
         return ({
             type: '',
             stockTagNumber: '',
             vin: '',
+            vip: false,
         });
     },
     methods: {
+        reset(){
+            this.type = '';
+            this.stockTagNumber = '';
+            this.vin = '';
+            this.vip = false;
+        },
+
         createJob: function(){
+            let vm = this;
             axios.post('/jobs', 
             {
                 type: this.type,
                 stockTagNumber: this.stockTagNumber,
                 vin: this.vin,
+                vip: this.vip,
+                startTime: Date.now(),
             })
             .then(function (response) {
-                console.dirxml(response.data);
+                // console.dirxml(response.data);
+                // vm.$emit('updateAll');
             })
             .catch(function (error) {
                 console.log(error);
             });
+
+            $('#exampleModal').modal('hide');
+            this.reset();
         }
     }
 }

@@ -14,29 +14,29 @@ class CreateJobsTable extends Migration
     public function up()
     {
         Schema::create('jobs', function (Blueprint $table) {
-            /*
-                id
-                Start Date and Time
-                Time in Queue
-                Status (Completed, processing, queued)
-                Time to Finish
-                *Total Time
-                Stock / Tag #
-                type_id
-            */
             $table->increments('id');
 
             $table->integer("status_id");
             $table->integer("type_id");
+            // $table->foreign("type_id")->references('id')->on('types');
             $table->integer("employee_id");
 
-            $table->dateTime("queue")->nullable();
-            $table->dateTime("processing")->nullable();
+            $table->bigInteger("created_at_ms");
+            $table->bigInteger("queue")->nullable();
+            $table->bigInteger("processing")->nullable();
+
+            $table->integer("queue_time")->nullable();
+            $table->integer("processing_time")->nullable();
+            $table->integer("total_time")->nullable();
 
             $table->string("stock_tag_number");
+            $table->boolean("vip")->default(false);
+
+            // $table->timestampsTz();
+            $table->timestampTz("created_at_timezone")->useCurrent();
 
 
-            $table->timestamps();
+            $table->timestampsTz();
         });
     }
 

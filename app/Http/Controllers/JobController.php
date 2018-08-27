@@ -14,11 +14,24 @@ class JobController extends Controller
      */
     public function index()
     {
-        $queued = Job::queued()->get();
-        $inProgress = Job::inProgress()->get();
-        $completed = Job::completed()->get();
+        $queued = Job::queued()->with(["status", "type"])->get()->toArray();
+        $inProgress = Job::inProgress()->with(["type", "employee"])->get()->toArray();
+        $completed = Job::completed()->with(["type","employee"])->get()->toArray();
 
         dd($queued, $inProgress, $completed);
+    }
+
+
+    public function queued() {
+        return Job::queued()->with(["status", "type"])->get();
+    }
+
+    public function inProgress() {
+        return Job::inProgress()->with(["status", "type", "employee"])->get();
+    }
+
+    public function completed() {
+        return Job::completed()->with(["status", "type", "employee"])->get();
     }
 
     /**
@@ -43,13 +56,19 @@ class JobController extends Controller
             'type' => 'required', 
             'stockTagNumber' => 'required',
             'vin' => 'nullable',
+            'vip' => 'required|boolean',
+            'startTime' => "required|numeric",
         ]);
+
+        // dd($validatedData);
 
         $job = Job::create([
             "status_id" => 1,
             "type_id" => $validatedData["type"],
             "employee_id" => 1,
             "stock_tag_number" => $validatedData["stockTagNumber"],
+            "vip" => $validatedData["vip"],
+            "created_at_ms" => $validatedData["startTime"]
         ]);
 
         // dd($job);
@@ -110,5 +129,33 @@ class JobController extends Controller
     public function destroy(Job $job)
     {
         //
+    }
+
+    public function startJob(Job $job, Request $request) {
+
+        $validatedData = $request->validate([
+            'timeStarted' => 'required', 
+        ]); 
+
+        $job->queue = (int)$validatedData['timeStarted'];
+        $job->queue_time = (int)$validatedData['timeStarted'] - $job->created_at_ms;
+        $job->status_id = 2;
+        $job->save();
+    }
+
+    public function completeJob(Job $job, Request $request) {
+
+        $validatedData = $request->validate([
+            'timeCompleted' => 'required', 
+        ]); 
+
+        $timeCompleted = (int)$validatedData['timeCompleted'];
+
+        $job->processing = $timeCompleted;
+        $job->processing_time = $timeCompleted - $job->queue;
+        $job->total_time = $timeCompleted - $job->created_at_ms;
+        $job->status_id = 3;
+        $job->save();
+
     }
 }

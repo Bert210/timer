@@ -14,10 +14,11 @@ window.Vue = require('vue');
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
-
-// Vue.component('example-component', require('./components/ExampleComponent.vue'));
-Vue.component('queuecard', require('./components/QueueCard.vue'));
-Vue.component('newjobmodal', require('./components/NewJobModal.vue'));
+Vue.component('timer', require('./components/Timer.vue'));
+Vue.component('newjobmodal', require('./components/Modal/NewJobModal.vue'));
+// Vue.component('timeformatter', require('./components/Util/Formatters/TimeFormatter.vue'));
+Vue.component('timeformatter', require('./components/Util/Formatters/TimeFormatter.vue'));
+Vue.component('startendtimeformatter', require('./components/Util/Formatters/StartEndTimeFormatter.vue'));
 
 
 const app = new Vue({
