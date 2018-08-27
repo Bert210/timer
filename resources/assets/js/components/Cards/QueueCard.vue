@@ -39,8 +39,8 @@
 
         data: function() {
             return {
-                startTime: +new Date(this.data.created_at_timezone),
-                time: Date.now() - +new Date(this.data.created_at_timezone),
+                startTime: this.data.created_at_ms,
+                time: Date.now() - this.data.created_at_ms,
             }
         },
 
