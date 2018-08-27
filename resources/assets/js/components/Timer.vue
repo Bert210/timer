@@ -43,7 +43,6 @@ export default {
     },
     methods: {
         updateAll: function(){
-            console.log("Updating all!");
             this.updateQueueCallback();
             this.updateProcessingCallback();
             this.updateCompleteCallback();
