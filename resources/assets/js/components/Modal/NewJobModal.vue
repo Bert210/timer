@@ -26,6 +26,11 @@
                     <label for="exampleInputEmail1">VIN: (Optional)</label>
                     <input type="text" v-model="vin" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                 </div>
+
+                <div class="form-group">
+                    <label for="vipCheckbox">VIP</label>
+                    <input type="checkbox" v-model="vip" class="form-control" id="vipCheckbox" aria-describedby="emailHelp">
+                </div>
             </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -44,6 +49,7 @@ export default {
             type: '',
             stockTagNumber: '',
             vin: '',
+            vip: false,
         });
     },
     methods: {
@@ -51,6 +57,7 @@ export default {
             this.type = '';
             this.stockTagNumber = '';
             this.vin = '';
+            this.vip = false;
         },
 
         createJob: function(){
@@ -60,6 +67,8 @@ export default {
                 type: this.type,
                 stockTagNumber: this.stockTagNumber,
                 vin: this.vin,
+                vip: this.vip,
+                startTime: Date.now(),
             })
             .then(function (response) {
                 // console.dirxml(response.data);

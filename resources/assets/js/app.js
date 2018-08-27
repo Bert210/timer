@@ -17,7 +17,7 @@ window.Vue = require('vue');
 Vue.component('timer', require('./components/Timer.vue'));
 Vue.component('newjobmodal', require('./components/Modal/NewJobModal.vue'));
 // Vue.component('timeformatter', require('./components/Util/Formatters/TimeFormatter.vue'));
-// Vue.component('timeformatter', require('./components/Util/Formatters/TimeFormatter.vue'));
+Vue.component('timeformatter', require('./components/Util/Formatters/TimeFormatter.vue'));
 Vue.component('startendtimeformatter', require('./components/Util/Formatters/StartEndTimeFormatter.vue'));
 
 

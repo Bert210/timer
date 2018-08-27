@@ -3,7 +3,9 @@
         <div :class="['card-header', headerBackground]">
             <div class="row align-items-center">
                 <div class="col-6">
-                    <h4 class="font-weight-bold">{{ stockTagNumber }}</h4>
+                    <h4 class="font-weight-bold">
+                        <span v-if="vip"><span class="lnr lnr-star"></span></span>
+                        {{ stockTagNumber }}</h4>
                 </div>
                 <div class="col-6 text-right">
                     <h4><span :class="['badge', badgeBackground]">{{ type.name }}</span></h4>
@@ -23,7 +25,7 @@
 
 <script>
     export default {
-        props: ["stockTagNumber", "type", "headerBackground", "badgeBackground"],
+        props: ["stockTagNumber", "type", "headerBackground", "badgeBackground", "vip"],
         mounted() {
             // setInterval(this.updateTimer, 1000);
         },

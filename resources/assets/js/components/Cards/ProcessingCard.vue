@@ -3,6 +3,7 @@
     <Card
         :stockTagNumber="this.data.stock_tag_number"
         :type="this.data.type"
+        :vip="this.data.vip"
         :headerBackground="this.setHeaderBackground()"
         badgeBackground="badge-light"
 

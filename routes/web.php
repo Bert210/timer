@@ -30,16 +30,23 @@ Route::get('/', function () {
 Route::get('/history', function () {
     $jobs = App\Job::with(['status', 'type', 'employee'])->get();
 
+    $avgQueue = App\Job::where('status_id', '>', 2)->get()->avg('queue_time');
+    $avgProcessing = App\Job::where('status_id', '>=', 3)->get()->avg('processing_time');
+    $avgTotal = App\Job::where('status_id', '>=', 3)->get()->avg('total_time');
 
     $types = App\Type::all();
     // dd(request()->query());
     if(request()->query("dd")){
-        dd($jobs);
+        dd($jobs, $avgQueue, $avgProcessing, $avgTotal, $types);
     }
 
     return view('history')
         ->with("jobs", $jobs)
-        ->with("types", $types);
+        ->with("types", $types)
+        ->with('avgQueue', $avgQueue)
+        ->with('avgProcessing', $avgProcessing)
+        ->with('avgTotal', $avgTotal);
+
 });
 
 Route::get("/jobs", "JobController@index");

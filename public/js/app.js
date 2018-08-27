@@ -30402,7 +30402,7 @@ window.Vue = __webpack_require__(163);
 Vue.component('timer', __webpack_require__(219));
 Vue.component('newjobmodal', __webpack_require__(201));
 // Vue.component('timeformatter', require('./components/Util/Formatters/TimeFormatter.vue'));
-// Vue.component('timeformatter', require('./components/Util/Formatters/TimeFormatter.vue'));
+Vue.component('timeformatter', __webpack_require__(204));
 Vue.component('startendtimeformatter', __webpack_require__(222));
 
 var app = new Vue({
@@ -65757,6 +65757,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -65830,9 +65831,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ["stockTagNumber", "type", "headerBackground", "badgeBackground"],
+    props: ["stockTagNumber", "type", "headerBackground", "badgeBackground", "vip"],
     mounted: function mounted() {
         // setInterval(this.updateTimer, 1000);
     }
@@ -65851,7 +65854,10 @@ var render = function() {
       _c("div", { staticClass: "row align-items-center" }, [
         _c("div", { staticClass: "col-6" }, [
           _c("h4", { staticClass: "font-weight-bold" }, [
-            _vm._v(_vm._s(_vm.stockTagNumber))
+            _vm.vip
+              ? _c("span", [_c("span", { staticClass: "lnr lnr-star" })])
+              : _vm._e(),
+            _vm._v("\n                    " + _vm._s(_vm.stockTagNumber))
           ])
         ]),
         _vm._v(" "),
@@ -65903,6 +65909,7 @@ var render = function() {
       attrs: {
         stockTagNumber: this.data.stock_tag_number,
         type: this.data.type,
+        vip: this.data.vip,
         headerBackground: this.setHeaderBackground(),
         badgeBackground: "badge-light"
       }
@@ -66034,6 +66041,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -66078,6 +66086,7 @@ var render = function() {
       attrs: {
         stockTagNumber: this.data.stock_tag_number,
         type: this.data.type,
+        vip: this.data.vip,
         badgeBackground: "badge-dark"
       }
     },
@@ -66211,6 +66220,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['types'],
@@ -66218,7 +66232,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             type: '',
             stockTagNumber: '',
-            vin: ''
+            vin: '',
+            vip: false
         };
     },
     methods: {
@@ -66226,6 +66241,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.type = '';
             this.stockTagNumber = '';
             this.vin = '';
+            this.vip = false;
         },
 
 
@@ -66234,7 +66250,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.post('/jobs', {
                 type: this.type,
                 stockTagNumber: this.stockTagNumber,
-                vin: this.vin
+                vin: this.vin,
+                vip: this.vip,
+                startTime: Date.now()
             }).then(function (response) {
                 // console.dirxml(response.data);
                 // vm.$emit('updateAll');
@@ -66377,6 +66395,53 @@ var render = function() {
                       return
                     }
                     _vm.vin = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", { attrs: { for: "vipCheckbox" } }, [_vm._v("VIP")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.vip,
+                    expression: "vip"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "checkbox",
+                  id: "vipCheckbox",
+                  "aria-describedby": "emailHelp"
+                },
+                domProps: {
+                  checked: Array.isArray(_vm.vip)
+                    ? _vm._i(_vm.vip, null) > -1
+                    : _vm.vip
+                },
+                on: {
+                  change: function($event) {
+                    var $$a = _vm.vip,
+                      $$el = $event.target,
+                      $$c = $$el.checked ? true : false
+                    if (Array.isArray($$a)) {
+                      var $$v = null,
+                        $$i = _vm._i($$a, $$v)
+                      if ($$el.checked) {
+                        $$i < 0 && (_vm.vip = $$a.concat([$$v]))
+                      } else {
+                        $$i > -1 &&
+                          (_vm.vip = $$a
+                            .slice(0, $$i)
+                            .concat($$a.slice($$i + 1)))
+                      }
+                    } else {
+                      _vm.vip = $$c
+                    }
                   }
                 }
               })
@@ -66865,6 +66930,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -66924,6 +66990,7 @@ var render = function() {
       attrs: {
         stockTagNumber: this.data.stock_tag_number,
         type: this.data.type,
+        vip: this.data.vip,
         headerBackground: this.setHeaderBackground(),
         badgeBackground: "badge-light"
       }

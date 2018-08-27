@@ -2,6 +2,51 @@
 
 @section('body')
 
+    <div class="row mb-2">
+
+        <div class="col-4">
+            <div class="card">
+                <div class="card-header text-bold text-center font-weight-bold">Avg Queue Time</div>
+                <div class="card-body text-center">
+                    <h3>
+                        <timeformatter
+                            :time="{{ $avgQueue }}"
+                        ></timeformatter>
+                    </h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-4">
+            <div class="card">
+                <div class="card-header text-bold text-center font-weight-bold">Avg Processing Time</div>
+                <div class="card-body text-center">
+                    <h3>
+                        <timeformatter
+                            :time="{{ $avgProcessing }}"
+                        ></timeformatter>
+                    </h3>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-4">
+                <div class="card">
+                    <div class="card-header text-bold text-center font-weight-bold">Avg Total Time</div>
+                    <div class="card-body text-center">
+                        <h3>
+                            <timeformatter
+                                :time="{{ $avgTotal }}"
+                            ></timeformatter>
+                        </h3>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+
+
     <div class="card">
 
         <div class="card-header">History</div>

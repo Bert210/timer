@@ -56,13 +56,19 @@ class JobController extends Controller
             'type' => 'required', 
             'stockTagNumber' => 'required',
             'vin' => 'nullable',
+            'vip' => 'required|boolean',
+            'startTime' => "required|numeric",
         ]);
+
+        // dd($validatedData);
 
         $job = Job::create([
             "status_id" => 1,
             "type_id" => $validatedData["type"],
             "employee_id" => 1,
             "stock_tag_number" => $validatedData["stockTagNumber"],
+            "vip" => $validatedData["vip"],
+            "created_at_ms" => $validatedData["startTime"]
         ]);
 
         // dd($job);
@@ -131,9 +137,8 @@ class JobController extends Controller
             'timeStarted' => 'required', 
         ]); 
 
-        var_dump($validatedData['timeStarted']);
-        
         $job->queue = (int)$validatedData['timeStarted'];
+        $job->queue_time = (int)$validatedData['timeStarted'] - $job->created_at_ms;
         $job->status_id = 2;
         $job->save();
     }
@@ -144,7 +149,11 @@ class JobController extends Controller
             'timeCompleted' => 'required', 
         ]); 
 
-        $job->processing = (int)$validatedData['timeCompleted'];
+        $timeCompleted = (int)$validatedData['timeCompleted'];
+
+        $job->processing = $timeCompleted;
+        $job->processing_time = $timeCompleted - $job->queue;
+        $job->total_time = $timeCompleted - $job->created_at_ms;
         $job->status_id = 3;
         $job->save();
 
