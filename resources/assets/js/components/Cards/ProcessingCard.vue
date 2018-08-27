@@ -41,8 +41,8 @@
 
         data: function() {
             return {
-                startTime: new Date(this.data.queue),
-                time: Date.now() - new Date(this.data.queue),
+                startTime: this.data.created_at_ms,
+                time: Date.now() -  this.data.created_at_ms,
             }
         },
 
@@ -72,8 +72,5 @@
 
             },
         },
-
-        computed: {
-        }
     }
 </script>

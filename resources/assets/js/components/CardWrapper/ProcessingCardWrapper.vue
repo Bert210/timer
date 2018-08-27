@@ -25,9 +25,11 @@ export default {
         this.getInProcessingCards();
         this.updateProcessing(this.getInProcessingCards);
     },
-    data: () => ({
-        processingCards: [],
-    }),
+    data: function() {
+        return ({
+            processingCards: [],    
+        })
+    },
 
     methods: {
         getInProcessingCards: function() {
@@ -35,6 +37,7 @@ export default {
 
             axios.get('/jobs/inProgress')
             .then( function(res){
+                vm.processingCards = [];
                 vm.processingCards = res.data;
                 // vm.updateAll();
             });

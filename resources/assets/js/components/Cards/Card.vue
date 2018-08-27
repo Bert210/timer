@@ -26,8 +26,5 @@
 <script>
     export default {
         props: ["stockTagNumber", "type", "headerBackground", "badgeBackground", "vip"],
-        mounted() {
-            // setInterval(this.updateTimer, 1000);
-        },
     }
 </script>

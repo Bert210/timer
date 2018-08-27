@@ -25,9 +25,11 @@ export default {
         this.getQueueCards();
         this.updateQueue(this.getQueueCards);
     },
-    data: () => ({
-        queueCards: [],
-    }),
+    data: function () {
+        return ({
+            queueCards: [],
+        })
+    },
 
     methods: {
         getQueueCards: function(){
@@ -35,6 +37,7 @@ export default {
 
             axios.get('/jobs/queued')
             .then( function(res){
+                vm.queueCards = [];
                 vm.queueCards = res.data;
             });
 
