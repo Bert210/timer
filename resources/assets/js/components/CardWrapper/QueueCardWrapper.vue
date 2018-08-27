@@ -8,6 +8,7 @@
                 <div class="card-body">
                     <QueueCard v-for="(queueCard, index) in queueCards" v-bind:key="index"
                             :data="queueCard"
+                            :startTime="queueCard.created_at_ms"
                             :updateList="getQueueCards"
                     ></QueueCard> 
                 </div>
@@ -37,7 +38,6 @@ export default {
 
             axios.get('/jobs/queued')
             .then( function(res){
-                vm.queueCards = [];
                 vm.queueCards = res.data;
             });
 

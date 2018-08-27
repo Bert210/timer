@@ -8,6 +8,7 @@
         <div class="card-body">
             <ProcessingCard v-for="(processingCard, index) in processingCards" v-bind:key="index"
                     :data="processingCard"
+                    :startTime="processingCard.queue"
                     :updateList="getInProcessingCards"
             ></ProcessingCard> 
         </div>
@@ -37,7 +38,7 @@ export default {
 
             axios.get('/jobs/inProgress')
             .then( function(res){
-                vm.processingCards = [];
+                // vm.processingCards = new Array();
                 vm.processingCards = res.data;
                 // vm.updateAll();
             });

@@ -31,7 +31,7 @@ import CompletedCardWrapper from './CardWrapper/CompletedCardWrapper.vue';
 export default {
     components: { QueueCardWrapper, ProcessingCardWrapper, CompletedCardWrapper},
     mounted: function() {
-        setInterval(this.updateAll, 2000);
+        setInterval(this.updateAll, 1000);
     },
 
     data: function() {
