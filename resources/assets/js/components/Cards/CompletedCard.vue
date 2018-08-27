@@ -6,7 +6,7 @@
         :vip="this.data.vip"
         badgeBackground="badge-dark"
     >
-        <div class="col-4">
+        <div class="col-4 text-center">
             <div>In Queue:</div>
             <div>
                 <TimeFormatter
@@ -14,7 +14,7 @@
                 ></TimeFormatter>
             </div>
         </div>
-        <div class="col-4">
+        <div class="col-4 text-center">
             <div>Processing:</div>
             <div>
                 <TimeFormatter
@@ -22,7 +22,7 @@
                 ></TimeFormatter>
             </div>
         </div>
-        <div class="col-4">
+        <div class="col-4 text-center">
             <div>Total Time:</div>
             <div>
                 <TimeFormatter
