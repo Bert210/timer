@@ -34,14 +34,13 @@
     export default {
         name: "ProcessingCard",
         components: { Card, TimeFormatter},
-        props: [ "data", "updateList" ],
+        props: [ "data", "updateList", "startTime" ],
         mounted() {
-            setInterval(this.timeDiff, 1000);
+            setInterval(this.timeDiff, 200);
         },
 
         data: function() {
             return {
-                startTime: this.data.queue,
                 time: Date.now() -  this.data.queue,
             }
         },
@@ -64,7 +63,7 @@
                     `/jobs/${this.data.id}/completedJob`,
                     { timeCompleted: Date.now() }
                 ).then(function (res){
-                    vm.updateList()
+                    vm.updateList();
                 }).catch(function (err) {
                     console.error(err);
                 })

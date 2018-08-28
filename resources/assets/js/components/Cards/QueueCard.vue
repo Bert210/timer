@@ -32,14 +32,14 @@
 
     export default {
         components: { Card, TimeFormatter},
-        props: [ "data", "updateList" ],
+        props: [ "data", "updateList", "startTime" ],
         mounted() {
-            setInterval(this.timeDiff, 1000);
+            setInterval(this.timeDiff, 200);
         },
 
         data: function() {
             return {
-                startTime: this.data.created_at_ms,
+                // startTime: this.data.created_at_ms,
                 time: Date.now() - this.data.created_at_ms,
             }
         },
@@ -56,6 +56,7 @@
                     timeStarted: Date.now(),
                 })
                 .then(function (res){
+                    
                     vm.updateList();
                 })
                 .catch(function (err){
